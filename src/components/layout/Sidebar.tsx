@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink } from "react-router-dom";
 import {
   LayoutDashboard,
   Calendar,
@@ -6,7 +6,7 @@ import {
   BarChart3,
   Activity,
   ChevronLeft,
-} from 'lucide-react';
+} from "lucide-react";
 import {
   Sidebar as ShadcnSidebar,
   SidebarContent,
@@ -18,14 +18,14 @@ import {
   SidebarMenuItem,
   SidebarTrigger,
   useSidebar,
-} from '../../components/ui/sidebar';
+} from "../../components/ui/sidebar";
 
 const navItems = [
-  { title: 'Overview', url: '/', icon: LayoutDashboard },
-  { title: 'Bookings', url: '/bookings', icon: Calendar },
-  { title: 'Slots', url: '/slots', icon: Zap },
-  { title: 'Analytics', url: '/analytics', icon: BarChart3 },
-  { title: 'System Health', url: '/health', icon: Activity },
+  { title: "Overview", url: "/", icon: LayoutDashboard },
+  { title: "Bookings", url: "/bookings", icon: Calendar },
+  { title: "Slots", url: "/slots", icon: Zap },
+  { title: "Analytics", url: "/analytics", icon: BarChart3 },
+  { title: "System Health", url: "/health", icon: Activity },
 ];
 
 export function Sidebar() {
@@ -37,15 +37,19 @@ export function Sidebar() {
         <div className="flex items-center justify-between p-4 border-b border-sidebar-border">
           {open && (
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg gradient-primary flex items-center justify-center">
+              <div className="w-10 h-10 rounded-lg gradient-primary flex items-center justify-center">
                 <Zap className="w-5 h-5 text-white" />
               </div>
-              <span className="font-bold text-sidebar-foreground">A2 Station</span>
+              <span className="font-bold text-sidebar-foreground">
+                A2 Station
+              </span>
             </div>
           )}
-          <SidebarTrigger className="ml-auto">
-            <ChevronLeft className={`h-4 w-4 transition-transform ${!open ? 'rotate-180' : ''}`} />
-          </SidebarTrigger>
+          <ChevronLeft
+            className={`h-4 w-4 transition-transform ${
+              !open ? "rotate-180" : ""
+            }`}
+          />
         </div>
 
         <SidebarGroup>
@@ -57,12 +61,12 @@ export function Sidebar() {
                   <SidebarMenuButton asChild>
                     <NavLink
                       to={item.url}
-                      end={item.url === '/'}
+                      end={item.url === "/"}
                       className={({ isActive }) =>
                         `flex items-center gap-3 rounded-lg px-3 py-2 transition-colors ${
                           isActive
-                            ? 'bg-sidebar-accent text-sidebar-primary font-medium'
-                            : 'text-sidebar-foreground hover:bg-sidebar-accent/50'
+                            ? "bg-sidebar-accent text-sidebar-primary font-medium active"
+                            : "text-sidebar-foreground hover:bg-sidebar-accent/50"
                         }`
                       }
                     >

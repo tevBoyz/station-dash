@@ -1,4 +1,6 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* A2 e-Corridor Design System - Futuristic EV Station Dashboard */
 
@@ -53,9 +55,21 @@
     --radius: 0.75rem;
 
     /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(180 75% 45%) 0%, hsl(180 85% 55%) 100%);
-    --gradient-accent: linear-gradient(135deg, hsl(25 95% 55%) 0%, hsl(25 100% 65%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(210 20% 99%) 100%);
+    --gradient-primary: linear-gradient(
+      135deg,
+      hsl(180 75% 45%) 0%,
+      hsl(180 85% 55%) 100%
+    );
+    --gradient-accent: linear-gradient(
+      135deg,
+      hsl(25 95% 55%) 0%,
+      hsl(25 100% 65%) 100%
+    );
+    --gradient-card: linear-gradient(
+      145deg,
+      hsl(0 0% 100%) 0%,
+      hsl(210 20% 99%) 100%
+    );
 
     /* Shadows */
     --shadow-soft: 0 2px 8px hsl(215 25% 15% / 0.08);
@@ -121,9 +135,21 @@
     --ring: 180 85% 55%;
 
     /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(180 85% 55%) 0%, hsl(180 95% 65%) 100%);
-    --gradient-accent: linear-gradient(135deg, hsl(25 100% 60%) 0%, hsl(25 100% 70%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(215 28% 14%) 0%, hsl(215 28% 16%) 100%);
+    --gradient-primary: linear-gradient(
+      135deg,
+      hsl(180 85% 55%) 0%,
+      hsl(180 95% 65%) 100%
+    );
+    --gradient-accent: linear-gradient(
+      135deg,
+      hsl(25 100% 60%) 0%,
+      hsl(25 100% 70%) 100%
+    );
+    --gradient-card: linear-gradient(
+      145deg,
+      hsl(215 28% 14%) 0%,
+      hsl(215 28% 16%) 100%
+    );
 
     /* Shadows */
     --shadow-soft: 0 2px 8px hsl(0 0% 0% / 0.3);
@@ -145,33 +171,50 @@
 
 @layer base {
   * {
-    border-color: var(--color-border);
+    @apply border-border;
   }
+
   body {
-    background-color: var(--color-background);
-    color: var(--color-foreground);
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-muted/30;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted-foreground/30 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/50;
   }
 }
-
 
 @layer utilities {
   /* Status Color Utilities */
   .status-available {
     @apply bg-[hsl(var(--status-available))];
   }
-  
+
   .status-charging {
     @apply bg-[hsl(var(--status-charging))];
   }
-  
+
   .status-reserved {
     @apply bg-[hsl(var(--status-reserved))];
   }
-  
+
   .status-faulty {
     @apply bg-[hsl(var(--status-faulty))];
   }
-  
+
   .status-payment {
     @apply bg-[hsl(var(--status-payment))];
   }
@@ -208,7 +251,8 @@
   }
 
   @keyframes charging {
-    0%, 100% {
+    0%,
+    100% {
       opacity: 0.6;
       transform: scale(1);
     }
@@ -217,4 +261,8 @@
       transform: scale(1.05);
     }
   }
+}
+
+.active {
+  border: 1px solid green;
 }
