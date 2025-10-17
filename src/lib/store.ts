@@ -39,8 +39,11 @@ interface StationState {
   notifications: Notification[];
   totalRevenue: number;
   totalEnergyDispensed: number;
+  isAuthenticated: boolean;
   
   // Actions
+  login: (phone: string, password: string) => void;
+  logout: () => void;
   updateSlot: (id: number, updates: Partial<Slot>) => void;
   addToQueue: (truck: Truck) => void;
   removeFromQueue: (truckId: string) => void;
@@ -86,6 +89,15 @@ export const useStationStore = create<StationState>((set, get) => ({
   notifications: [],
   totalRevenue: 0,
   totalEnergyDispensed: 0,
+  isAuthenticated: false,
+
+  login: (phone: string, password: string) => {
+    set({ isAuthenticated: true });
+  },
+
+  logout: () => {
+    set({ isAuthenticated: false });
+  },
 
   updateSlot: (id, updates) => {
     set((state) => ({

@@ -1,11 +1,15 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard,
   Calendar,
   Zap,
   BarChart3,
   Activity,
-} from "lucide-react";
+  ChevronLeft,
+  LogOut,
+} from 'lucide-react';
+import { useStationStore } from '../../lib/store';
+import { Button } from '../../components/ui/button';
 import {
   Sidebar as ShadcnSidebar,
   SidebarContent,
@@ -15,21 +19,29 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarTrigger,
   useSidebar,
-} from "../../components/ui/sidebar";
-import { useEffect, useState } from "react";
+} from '../../components/ui/sidebar';
+import { useEffect, useState } from 'react';
 
 const navItems = [
-  { title: "Overview", url: "/", icon: LayoutDashboard },
-  { title: "Bookings", url: "/bookings", icon: Calendar },
-  { title: "Slots", url: "/slots", icon: Zap },
-  { title: "Analytics", url: "/analytics", icon: BarChart3 },
-  { title: "System Health", url: "/health", icon: Activity },
+  { title: 'Overview', url: '/', icon: LayoutDashboard },
+  { title: 'Bookings', url: '/bookings', icon: Calendar },
+  { title: 'Slots', url: '/slots', icon: Zap },
+  { title: 'Analytics', url: '/analytics', icon: BarChart3 },
+  { title: 'System Health', url: '/health', icon: Activity },
 ];
 
 export function Sidebar() {
   const { open } = useSidebar();
+  const logout = useStationStore((state) => state.logout);
+  const navigate = useNavigate();
   const [uptime, setUptime] = useState(0);
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
   useEffect(() => {
     const startTime = 1760682023;
@@ -73,12 +85,12 @@ export function Sidebar() {
                   <SidebarMenuButton asChild>
                     <NavLink
                       to={item.url}
-                      end={item.url === "/"}
+                      end={item.url === '/'}
                       className={({ isActive }) =>
                         `flex items-center gap-3 rounded-lg px-3 py-2 transition-colors ${
                           isActive
-                            ? "bg-sidebar-accent text-sidebar-primary font-medium active"
-                            : "text-sidebar-foreground hover:bg-sidebar-accent/50"
+                            ? 'bg-sidebar-accent text-sidebar-primary font-medium'
+                            : 'text-sidebar-foreground hover:bg-sidebar-accent/50'
                         }`
                       }
                     >
@@ -93,11 +105,11 @@ export function Sidebar() {
         </SidebarGroup>
 
         {open && (
-          <div className="mt-auto p-4 border-t border-sidebar-border">
+          <div className="mt-auto p-4 border-t border-sidebar-border space-y-4">
             <div className="text-xs text-sidebar-foreground/60 space-y-1">
               <div className="flex justify-between">
                 <span>Uptime</span>
-                <span className="text-status-available">{formatUptime(uptime)}</span>
+                <span className="text-status-available">99.7%</span>
               </div>
               <div className="flex justify-between">
                 <span>Power Load</span>
@@ -108,6 +120,15 @@ export function Sidebar() {
                 <span>34°C</span>
               </div>
             </div>
+            <Button 
+              onClick={handleLogout} 
+              variant="ghost" 
+              size="sm" 
+              className="w-full justify-start gap-2"
+            >
+              <LogOut className="h-4 w-4" />
+              Logout
+            </Button>
           </div>
         )}
       </SidebarContent>

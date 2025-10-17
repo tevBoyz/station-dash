@@ -1,5 +1,13 @@
 import { createRoot } from "react-dom/client";
+import { BrowserRouter, useNavigate } from "react-router-dom";
 import App from "./App.tsx";
 import "./index.css";
 
-createRoot(document.getElementById("root")!).render(<App />);
+const root = createRoot(document.getElementById("root")!);
+
+// Redirect to splash on initial load
+if (window.location.pathname === "/") {
+  window.history.replaceState({}, "", "/splash");
+}
+
+root.render(<App />);
