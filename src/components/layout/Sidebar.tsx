@@ -5,7 +5,6 @@ import {
   Zap,
   BarChart3,
   Activity,
-  ChevronLeft,
 } from "lucide-react";
 import {
   Sidebar as ShadcnSidebar,
@@ -16,9 +15,9 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarTrigger,
   useSidebar,
 } from "../../components/ui/sidebar";
+import { useEffect, useState } from "react";
 
 const navItems = [
   { title: "Overview", url: "/", icon: LayoutDashboard },
@@ -30,26 +29,39 @@ const navItems = [
 
 export function Sidebar() {
   const { open } = useSidebar();
+  const [uptime, setUptime] = useState(0);
+
+  useEffect(() => {
+    const startTime = 1760682023;
+    
+    const interval = setInterval(() => {
+      const currentTime = Date.now() / 1000;
+      const elapsedTime = Math.floor(currentTime - startTime);
+      setUptime(elapsedTime);
+    }, 1000); // Update every second
+
+    // Cleanup function to clear interval when component unmounts
+    return () => clearInterval(interval);
+  }, []); // Empty dependency array means this runs once on mount
+
+  // Format uptime for display (optional)
+  const formatUptime = (seconds : number) => {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  };
 
   return (
     <ShadcnSidebar className="border-r border-sidebar-border">
       <SidebarContent>
         <div className="flex items-center justify-between p-4 border-b border-sidebar-border">
           {open && (
-            <div className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-lg gradient-primary flex items-center justify-center">
-                <Zap className="w-5 h-5 text-white" />
-              </div>
-              <span className="font-bold text-sidebar-foreground">
-                A2 Station
-              </span>
+            <div className="flex justify-center items-center gap-2 w-full h-[100px] rounded-lg gradient-card force-light">
+                <img src="/logo.png" alt="A2 Logo" className="w-[130px] "/>
             </div>
           )}
-          <ChevronLeft
-            className={`h-4 w-4 transition-transform ${
-              !open ? "rotate-180" : ""
-            }`}
-          />
+          
         </div>
 
         <SidebarGroup>
@@ -85,7 +97,7 @@ export function Sidebar() {
             <div className="text-xs text-sidebar-foreground/60 space-y-1">
               <div className="flex justify-between">
                 <span>Uptime</span>
-                <span className="text-status-available">99.7%</span>
+                <span className="text-status-available">{formatUptime(uptime)}</span>
               </div>
               <div className="flex justify-between">
                 <span>Power Load</span>

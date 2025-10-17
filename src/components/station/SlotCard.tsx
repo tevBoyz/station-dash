@@ -27,12 +27,17 @@ export function SlotCard({ slot, onStartSession, onEndSession, onProcessPayment 
   return (
     <Card className="p-4 gradient-card border-border/40 hover:shadow-lg transition-all group">
       {/* Header */}
-      <div className="flex items-center justify-between mb-3">
-        <div className="flex items-center gap-2">
-          <Zap className={`w-5 h-5 ${config.color} ${slot.status === 'charging' ? 'animate-charging' : ''}`} />
-          <span className="font-bold text-lg">Slot #{slot.id}</span>
+      <div className="flex flex-col items-center justify-between gap-5 mb-3 w-full">
+        <div className="w-full flex items-center justify-between gap-2">
+          <div className="left flex items-center justify-center">
+             <Zap className={`w-8 h-8 ${config.color} ${slot.status === 'charging' ? 'animate-charging' : ''}`} />
+          <span className="font-i text-md">Slot </span>
+          </div>
+          <div className="right">
+            <span className='font-bold text-4xl '>#{slot.id}</span>
+          </div>
         </div>
-        <div className={`px-3 py-1 rounded-full text-xs font-semibold ${config.bgColor} text-white`}>
+        <div className={`p-3 w-full text-center font-bold rounded-full text-xs font-semibold ${config.bgColor} text-white`}>
           {config.label}
         </div>
       </div>
@@ -109,7 +114,7 @@ export function SlotCard({ slot, onStartSession, onEndSession, onProcessPayment 
           </Button>
         )}
         {slot.status === 'charging' && onEndSession && (
-          <Button size="sm" variant="outline" className="w-full" onClick={onEndSession}>
+          <Button size="sm" variant="outline" className="w-full hover:text-white dark:[hover:bg-red]" onClick={onEndSession}>
             End Session
           </Button>
         )}

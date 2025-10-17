@@ -12,12 +12,36 @@ import {
   Clock,
 } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
+import {useEffect, useState} from 'react';
 
 export default function SystemHealth() {
   const { notifications } = useStationStore();
 
+  const [uptime, setUptime] = useState(0);
+  
+    useEffect(() => {
+      const startTime = 1760682023;
+      
+      const interval = setInterval(() => {
+        const currentTime = Date.now() / 1000;
+        const elapsedTime = Math.floor(currentTime - startTime);
+        setUptime(elapsedTime);
+      }, 1000); // Update every second
+  
+      // Cleanup function to clear interval when component unmounts
+      return () => clearInterval(interval);
+    }, []); // Empty dependency array means this runs once on mount
+  
+    // Format uptime for display (optional)
+    const formatUptime = (seconds : number) => {
+      const hours = Math.floor(seconds / 3600);
+      const minutes = Math.floor((seconds % 3600) / 60);
+      const secs = seconds % 60;
+      return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    };
+
   const systemMetrics = [
-    { label: 'Uptime', value: '99.7%', status: 'healthy', icon: Clock },
+    { label: 'Uptime', value: formatUptime(uptime), status: 'healthy', icon: Clock },
     { label: 'Power Load', value: '78%', status: 'healthy', icon: Zap },
     { label: 'Temperature', value: '34°C', status: 'healthy', icon: Thermometer },
     { label: 'Network', value: 'Connected', status: 'healthy', icon: Activity },
