@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 import { Moon, Sun } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { Sidebar } from "../../components/layout/Sidebar";
-import { SidebarProvider, SidebarTrigger } from "../../components/ui/sidebar";
+import { SidebarProvider } from "../../components/ui/sidebar";
 
 interface DashboardLayoutProps {
   children?: ReactNode;

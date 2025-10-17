@@ -90,8 +90,10 @@ export const useStationStore = create<StationState>((set, get) => ({
   totalRevenue: 0,
   totalEnergyDispensed: 0,
   isAuthenticated: false,
+  phone: '',
+  password: '',
 
-  login: (phone: string, password: string) => {
+  login: () => {
     set({ isAuthenticated: true });
   },
 

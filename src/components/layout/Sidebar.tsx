@@ -5,7 +5,6 @@ import {
   Zap,
   BarChart3,
   Activity,
-  ChevronLeft,
   LogOut,
 } from 'lucide-react';
 import { useStationStore } from '../../lib/store';
@@ -19,7 +18,6 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarTrigger,
   useSidebar,
 } from '../../components/ui/sidebar';
 import { useEffect, useState } from 'react';
@@ -109,7 +107,7 @@ export function Sidebar() {
             <div className="text-xs text-sidebar-foreground/60 space-y-1">
               <div className="flex justify-between">
                 <span>Uptime</span>
-                <span className="text-status-available">99.7%</span>
+                <span className="text-status-available">{formatUptime(uptime)}</span>
               </div>
               <div className="flex justify-between">
                 <span>Power Load</span>
